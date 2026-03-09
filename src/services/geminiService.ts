@@ -1,7 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { CuratedEvent } from "../types";
 
-const key = process.env.GEMINI_API_KEY || null;
+const key = import.meta.env.VITE_GEMINI_API_KEY || null;
 const ai = key ? new GoogleGenAI({ apiKey: key }) : null;
 
 export async function generateCuratedEvents(

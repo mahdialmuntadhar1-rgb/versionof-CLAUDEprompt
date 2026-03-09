@@ -77,8 +77,10 @@ export default function App() {
 
   return (
     <div 
-      className="min-h-screen bg-bg-deep text-text-white selection:bg-gold/30"
+      style={{ background: '#07090F', minHeight: '100vh' }}
+      data-reduced-motion="user-preference"
       dir={isRTL ? 'rtl' : 'ltr'}
+      className="text-text-white selection:bg-gold/30"
     >
       <Header 
         language={language}

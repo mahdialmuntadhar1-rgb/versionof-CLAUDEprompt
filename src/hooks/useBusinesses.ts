@@ -1,17 +1,16 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo } from 'react';
 import { Business, Category } from '../types';
 import { MOCK_BUSINESSES } from '../constants';
 
-export function useBusinesses() {
-  const [businesses] = useState<Business[]>(MOCK_BUSINESSES);
+export const useBusinesses = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [selectedGovernorate, setSelectedGovernorate] = useState<string | null>(null);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const filtered = useMemo(() => {
-    return businesses.filter(b => {
+    return MOCK_BUSINESSES.filter(b => {
       const matchesSearch = searchQuery === '' || 
         b.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         b.nameAr.includes(searchQuery) ||
@@ -24,40 +23,33 @@ export function useBusinesses() {
 
       return matchesSearch && matchesCategory && matchesGovernorate && matchesCity;
     });
-  }, [businesses, searchQuery, selectedCategory, selectedGovernorate, selectedCity]);
+  }, [searchQuery, selectedCategory, selectedGovernorate, selectedCity]);
 
-  const setSearch = useCallback((q: string) => setSearchQuery(q), []);
-  const setCategory = useCallback((c: Category | null) => setSelectedCategory(c), []);
-  const setGovernorate = useCallback((g: string | null) => setSelectedGovernorate(g), []);
-  const setCity = useCallback((c: string | null) => setSelectedCity(c), []);
-  
-  const clearFilters = useCallback(() => {
+  const clearFilters = () => {
     setSearchQuery('');
     setSelectedCategory(null);
     setSelectedGovernorate(null);
     setSelectedCity(null);
-  }, []);
+  };
 
-  const getFeatured = useCallback(() => businesses.filter(b => b.isFeatured), [businesses]);
-  const getByCategory = useCallback((c: Category) => businesses.filter(b => b.category === c), [businesses]);
-  const getById = useCallback((id: string) => businesses.find(b => b.id === id), [businesses]);
+  const getFeatured = () => MOCK_BUSINESSES.filter(b => b.isFeatured);
+  const getByCategory = (c: Category) => MOCK_BUSINESSES.filter(b => b.category === c);
+  const getById = (id: string) => MOCK_BUSINESSES.find(b => b.id === id);
 
   return {
-    businesses,
+    businesses: MOCK_BUSINESSES,
     filtered,
     loading,
     searchQuery,
     selectedCategory,
-    selectedGovernorate,
-    selectedCity,
-    setSearch,
-    setCategory,
-    setGovernorate,
-    setCity,
+    setSearch: setSearchQuery,
+    setCategory: setSelectedCategory,
+    setGovernorate: setSelectedGovernorate,
+    setCity: setSelectedCity,
     clearFilters,
     getFeatured,
     getByCategory,
     getById,
     resultCount: filtered.length
   };
-}
+};
