@@ -102,17 +102,19 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </p>
 
           {/* Big search bar */}
-          <form onSubmit={handleSearch} className="relative max-w-[720px] mx-auto mb-12 group">
-            <div className="flex items-center h-[72px] bg-bg-card/40 backdrop-blur-md border border-border-custom rounded-[24px] p-2 shadow-[0_30px_60px_rgba(0,0,0,0.5)] focus-within:border-gold/50 focus-within:ring-4 focus-within:ring-gold/10 transition-all duration-500">
-              <Search className="w-6 h-6 text-gold ml-5 shrink-0 group-focus-within:scale-110 transition-transform" />
-              <input
-                type="text"
-                value={localSearch}
-                onChange={(e) => setLocalSearch(e.target.value)}
-                placeholder={t('searchPlaceholder')}
-                className="flex-1 bg-transparent border-none focus:ring-0 text-text-white px-5 text-lg placeholder:text-text-faint font-medium"
-              />
-              <button type="submit" className="h-full px-10 rounded-[18px] btn-gold text-base">
+          <form onSubmit={handleSearch} className="relative max-w-[720px] mx-auto mb-12 group px-2 sm:px-0">
+            <div className="flex flex-col sm:flex-row items-center sm:h-[72px] bg-bg-card/40 backdrop-blur-md border border-border-custom rounded-[24px] p-2 shadow-[0_30px_60px_rgba(0,0,0,0.5)] focus-within:border-gold/50 focus-within:ring-4 focus-within:ring-gold/10 transition-all duration-500 gap-2 sm:gap-0">
+              <div className="flex items-center w-full sm:w-auto flex-1 px-3 sm:px-0">
+                <Search className="w-6 h-6 text-gold ml-2 sm:ml-5 shrink-0 group-focus-within:scale-110 transition-transform" />
+                <input
+                  type="text"
+                  value={localSearch}
+                  onChange={(e) => setLocalSearch(e.target.value)}
+                  placeholder={t('searchPlaceholder')}
+                  className="flex-1 bg-transparent border-none focus:ring-0 text-text-white px-3 sm:px-5 text-base sm:text-lg placeholder:text-text-faint font-medium min-h-[44px]"
+                />
+              </div>
+              <button type="submit" className="w-full sm:w-auto h-12 sm:h-full px-10 rounded-[18px] btn-gold text-sm sm:text-base min-h-[44px]">
                 {t('search')}
               </button>
             </div>
@@ -136,19 +138,19 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </motion.div>
 
         {/* Stats row */}
-        <div className="mt-24 flex items-center gap-6 md:gap-12 text-text-faint text-xs font-bold uppercase tracking-widest">
-          <div className="flex items-center gap-3">
-            <span className="text-gold text-lg">500+</span>
+        <div className="mt-16 sm:mt-24 flex flex-wrap items-center justify-center gap-4 sm:gap-12 text-text-faint text-[10px] sm:text-xs font-bold uppercase tracking-widest px-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="text-gold text-base sm:text-lg">500+</span>
             <span>{t('businesses')}</span>
           </div>
-          <div className="w-1.5 h-1.5 rounded-full bg-border-custom" />
-          <div className="flex items-center gap-3">
-            <span className="text-gold text-lg">18</span>
+          <div className="hidden sm:block w-1.5 h-1.5 rounded-full bg-border-custom" />
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="text-gold text-base sm:text-lg">18</span>
             <span>{t('governorate')}</span>
           </div>
-          <div className="w-1.5 h-1.5 rounded-full bg-border-custom" />
-          <div className="flex items-center gap-3">
-            <span className="text-gold text-lg">3</span>
+          <div className="hidden sm:block w-1.5 h-1.5 rounded-full bg-border-custom" />
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="text-gold text-base sm:text-lg">3</span>
             <span>{t('languages')}</span>
           </div>
         </div>
@@ -166,7 +168,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {categories.map(cat => {
             const count = getCategoryCount(cat.id);
             return (
@@ -247,10 +249,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </button>
           </div>
 
-          <div className="flex gap-8 overflow-x-auto pb-6 no-scrollbar snap-x snap-mandatory relative z-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
             {isGenerating ? (
               [...Array(4)].map((_, i) => (
-                <div key={i} className="w-[320px] flex-shrink-0 bg-bg-card/60 border border-border-custom rounded-3xl p-6 animate-pulse">
+                <div key={i} className="w-full bg-bg-card/60 border border-border-custom rounded-3xl p-6 animate-pulse">
                   <div className="aspect-[16/10] bg-bg-elevated rounded-2xl mb-6" />
                   <div className="h-5 bg-bg-elevated rounded-lg w-3/4 mb-4" />
                   <div className="h-4 bg-bg-elevated rounded-lg w-1/2" />
@@ -258,7 +260,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               ))
             ) : (
               events.map(event => (
-                <div key={event.id} className="w-[320px] flex-shrink-0 cc-card p-6 snap-start group">
+                <div key={event.id} className="w-full cc-card p-6 group">
                   <div className="aspect-[16/10] relative rounded-2xl overflow-hidden mb-6 bg-bg-elevated">
                     <div className="absolute inset-0 bg-gradient-to-br from-gold/20 to-teal/20 group-hover:scale-110 group-hover:rotate-2 transition-transform duration-700" />
                     <div className="absolute inset-0 bg-bg-deep/20 group-hover:bg-transparent transition-colors duration-500" />
@@ -289,7 +291,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {GOVERNORATES.map(gov => {
             const count = getGovCount(gov);
             return (

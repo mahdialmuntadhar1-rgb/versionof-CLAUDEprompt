@@ -49,14 +49,14 @@ export const BrowseView: React.FC<BrowseViewProps> = ({
       </div>
 
       {/* STICKY FILTER BAR */}
-      <div className="sticky top-[80px] z-40 bg-bg-deep/80 backdrop-blur-xl py-6 -mx-4 px-4 border-b border-border-custom/50 mb-12">
-        <div className="flex flex-col gap-6">
+      <div className="sticky top-[80px] z-40 bg-bg-deep/80 backdrop-blur-xl py-4 sm:py-6 -mx-4 px-4 border-b border-border-custom/50 mb-8 sm:mb-12">
+        <div className="flex flex-col gap-4 sm:gap-6">
           {/* Row 1 — Category chips */}
-          <div className="flex items-center gap-3 overflow-x-auto no-scrollbar pb-2">
+          <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto no-scrollbar pb-2 -mx-4 px-4">
             <button
               onClick={() => onCategorySelect(null)}
               className={cn(
-                "px-6 py-2.5 rounded-xl text-xs font-bold border transition-all duration-300 whitespace-nowrap uppercase tracking-widest",
+                "px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl text-[10px] sm:text-xs font-bold border transition-all duration-300 whitespace-nowrap uppercase tracking-widest min-h-[44px]",
                 !selectedCategory 
                   ? "bg-gold text-bg-deep border-gold shadow-lg shadow-gold/20" 
                   : "bg-bg-card/40 border-border-custom text-text-muted hover:border-gold/40 hover:text-gold"
@@ -69,13 +69,13 @@ export const BrowseView: React.FC<BrowseViewProps> = ({
                 key={cat.id}
                 onClick={() => onCategorySelect(cat.id)}
                 className={cn(
-                  "px-6 py-2.5 rounded-xl text-xs font-bold border transition-all duration-300 whitespace-nowrap flex items-center gap-3 uppercase tracking-widest",
+                  "px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl text-[10px] sm:text-xs font-bold border transition-all duration-300 whitespace-nowrap flex items-center gap-2 sm:gap-3 uppercase tracking-widest min-h-[44px]",
                   selectedCategory === cat.id 
                     ? "bg-gold text-bg-deep border-gold shadow-lg shadow-gold/20" 
                     : "bg-bg-card/40 border-border-custom text-text-muted hover:border-gold/40 hover:text-gold"
                 )}
               >
-                <span className="text-base">{cat.emoji}</span>
+                <span className="text-sm sm:text-base">{cat.emoji}</span>
                 <span>{language === 'en' ? cat.labelEn : language === 'ar' ? cat.labelAr : cat.labelKu}</span>
               </button>
             ))}
@@ -83,14 +83,14 @@ export const BrowseView: React.FC<BrowseViewProps> = ({
 
           {/* Row 2 — Results info & Sort */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-text-muted font-bold uppercase tracking-widest">
+            <div className="flex items-center justify-between sm:justify-start gap-4">
+              <span className="text-[10px] sm:text-sm text-text-muted font-bold uppercase tracking-widest">
                 {t('showingResults')}: <span className="text-gold">{businesses.length}</span>
               </span>
               {selectedCategory && (
                 <button 
                   onClick={onClearFilters}
-                  className="flex items-center gap-2 text-[10px] font-black uppercase tracking-tighter text-red/80 hover:text-red transition-colors"
+                  className="flex items-center gap-2 text-[10px] font-black uppercase tracking-tighter text-red/80 hover:text-red transition-colors min-h-[44px]"
                 >
                   <X className="w-3 h-3" />
                   {t('clearAll')}
@@ -98,8 +98,8 @@ export const BrowseView: React.FC<BrowseViewProps> = ({
               )}
             </div>
 
-            <div className="relative group">
-              <button className="flex items-center gap-3 text-xs font-bold text-text-muted hover:text-gold transition-all duration-300 bg-bg-card/40 border border-border-custom rounded-xl px-5 py-3 min-w-[200px] justify-between">
+            <div className="relative group w-full sm:w-auto">
+              <button className="flex items-center gap-3 text-[10px] sm:text-xs font-bold text-text-muted hover:text-gold transition-all duration-300 bg-bg-card/40 border border-border-custom rounded-xl px-4 sm:px-5 py-3 w-full sm:min-w-[200px] justify-between min-h-[44px]">
                 <div className="flex items-center gap-2">
                   <Filter className="w-3.5 h-3.5 text-gold/60" />
                   <span>{t('sortBy')}: {t(sortBy === 'rating' ? 'highestRated' : sortBy === 'reviews' ? 'mostReviewed' : 'az')}</span>
@@ -112,7 +112,7 @@ export const BrowseView: React.FC<BrowseViewProps> = ({
                     key={option}
                     onClick={() => setSortBy(option)}
                     className={cn(
-                      "w-full text-left px-5 py-4 text-xs font-bold uppercase tracking-widest transition-all duration-300 hover:bg-gold/10",
+                      "w-full text-left px-5 py-4 text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-all duration-300 hover:bg-gold/10 min-h-[44px]",
                       sortBy === option ? "text-gold bg-gold/5" : "text-text-muted"
                     )}
                   >
@@ -127,7 +127,7 @@ export const BrowseView: React.FC<BrowseViewProps> = ({
 
       {/* GRID */}
       {sortedBusinesses.length > 0 ? (
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {sortedBusinesses.map(business => (
             <BusinessCard
               key={business.id}
