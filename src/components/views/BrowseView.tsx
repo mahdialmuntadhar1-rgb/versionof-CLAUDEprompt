@@ -2,12 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Filter, X, ChevronDown, Compass } from 'lucide-react';
 import { Business, Category, Language, CategoryInfo } from '../../types';
 import { BusinessCard } from '../ui/BusinessCard';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { cn } from '../../utils/cn';
 
 interface BrowseViewProps {
   language: Language;
@@ -46,46 +41,25 @@ export const BrowseView: React.FC<BrowseViewProps> = ({
   }, [businesses, sortBy, language]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 pt-24 pb-20">
+    <div className="max-w-7xl mx-auto px-4 pt-32 pb-20">
+      {/* HEADER */}
+      <div className="mb-12">
+        <h1 className="text-4xl font-black text-text-white tracking-tighter mb-4">{t('browse')}</h1>
+        <p className="text-text-muted font-medium">Discover the best places and services across Iraq</p>
+      </div>
+
       {/* STICKY FILTER BAR */}
-      <div className="sticky top-[64px] z-40 bg-bg-deep/80 backdrop-blur-xl py-4 -mx-4 px-4 border-b border-[#1E2D52] mb-8">
-        <div className="flex flex-col gap-4">
-          {/* Row 1 — Active filter pills */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#162040] border border-[#1E2D52] text-[11px] font-bold text-[#8A9BB5] uppercase tracking-wider">
-              <Filter className="w-3 h-3" />
-              {t('filters')}
-            </div>
-            
-            {selectedCategory && (
-              <button 
-                onClick={() => onCategorySelect(null)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gold/10 border border-gold/30 text-xs font-bold text-gold whitespace-nowrap"
-              >
-                {t('category')}: {language === 'en' ? categories.find(c => c.id === selectedCategory)?.labelEn : language === 'ar' ? categories.find(c => c.id === selectedCategory)?.labelAr : categories.find(c => c.id === selectedCategory)?.labelKu}
-                <X className="w-3 h-3" />
-              </button>
-            )}
-
-            {selectedCategory && (
-              <button 
-                onClick={onClearFilters}
-                className="text-xs text-[#4A5568] hover:text-gold transition-colors whitespace-nowrap ml-2 font-medium"
-              >
-                {t('clearAll')}
-              </button>
-            )}
-          </div>
-
-          {/* Row 2 — Category chips */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+      <div className="sticky top-[80px] z-40 bg-bg-deep/80 backdrop-blur-xl py-6 -mx-4 px-4 border-b border-border-custom/50 mb-12">
+        <div className="flex flex-col gap-6">
+          {/* Row 1 — Category chips */}
+          <div className="flex items-center gap-3 overflow-x-auto no-scrollbar pb-2">
             <button
               onClick={() => onCategorySelect(null)}
               className={cn(
-                "px-4 py-2 rounded-xl text-xs font-bold border transition-all whitespace-nowrap",
+                "px-6 py-2.5 rounded-xl text-xs font-bold border transition-all duration-300 whitespace-nowrap uppercase tracking-widest",
                 !selectedCategory 
-                  ? "bg-gold text-bg-deep border-gold" 
-                  : "bg-[#0F1629] border-[#1E2D52] text-[#8A9BB5] hover:border-gold/50"
+                  ? "bg-gold text-bg-deep border-gold shadow-lg shadow-gold/20" 
+                  : "bg-bg-card/40 border-border-custom text-text-muted hover:border-gold/40 hover:text-gold"
               )}
             >
               {t('allCategories')}
@@ -95,37 +69,51 @@ export const BrowseView: React.FC<BrowseViewProps> = ({
                 key={cat.id}
                 onClick={() => onCategorySelect(cat.id)}
                 className={cn(
-                  "px-4 py-2 rounded-xl text-xs font-bold border transition-all whitespace-nowrap flex items-center gap-2",
+                  "px-6 py-2.5 rounded-xl text-xs font-bold border transition-all duration-300 whitespace-nowrap flex items-center gap-3 uppercase tracking-widest",
                   selectedCategory === cat.id 
-                    ? "bg-gold text-bg-deep border-gold" 
-                    : "bg-[#0F1629] border-[#1E2D52] text-[#8A9BB5] hover:border-gold/50"
+                    ? "bg-gold text-bg-deep border-gold shadow-lg shadow-gold/20" 
+                    : "bg-bg-card/40 border-border-custom text-text-muted hover:border-gold/40 hover:text-gold"
                 )}
               >
-                <span>{cat.emoji}</span>
+                <span className="text-base">{cat.emoji}</span>
                 <span>{language === 'en' ? cat.labelEn : language === 'ar' ? cat.labelAr : cat.labelKu}</span>
               </button>
             ))}
           </div>
 
-          {/* Row 3 — Results info & Sort */}
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-[#8A9BB5] font-medium">
-              {t('showingResults')}: <span className="text-text-white font-bold">{businesses.length}</span>
-            </span>
+          {/* Row 2 — Results info & Sort */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-text-muted font-bold uppercase tracking-widest">
+                {t('showingResults')}: <span className="text-gold">{businesses.length}</span>
+              </span>
+              {selectedCategory && (
+                <button 
+                  onClick={onClearFilters}
+                  className="flex items-center gap-2 text-[10px] font-black uppercase tracking-tighter text-red/80 hover:text-red transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                  {t('clearAll')}
+                </button>
+              )}
+            </div>
 
             <div className="relative group">
-              <button className="flex items-center gap-2 text-xs font-bold text-[#8A9BB5] hover:text-gold transition-colors bg-[#0F1629] border border-[#1E2D52] rounded-lg px-3 py-1.5">
-                {t('sortBy')}: {t(sortBy === 'rating' ? 'highestRated' : sortBy === 'reviews' ? 'mostReviewed' : 'az')}
-                <ChevronDown className="w-3 h-3" />
+              <button className="flex items-center gap-3 text-xs font-bold text-text-muted hover:text-gold transition-all duration-300 bg-bg-card/40 border border-border-custom rounded-xl px-5 py-3 min-w-[200px] justify-between">
+                <div className="flex items-center gap-2">
+                  <Filter className="w-3.5 h-3.5 text-gold/60" />
+                  <span>{t('sortBy')}: {t(sortBy === 'rating' ? 'highestRated' : sortBy === 'reviews' ? 'mostReviewed' : 'az')}</span>
+                </div>
+                <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
               </button>
-              <div className="absolute right-0 top-full mt-2 w-48 bg-[#162040] border border-[#1E2D52] rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 overflow-hidden">
+              <div className="absolute right-0 top-full mt-2 w-full bg-bg-elevated border border-border-custom rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden backdrop-blur-xl">
                 {(['rating', 'reviews', 'az'] as const).map(option => (
                   <button
                     key={option}
                     onClick={() => setSortBy(option)}
                     className={cn(
-                      "w-full text-left px-4 py-3 text-xs font-medium transition-colors hover:bg-[#0F1629]",
-                      sortBy === option ? "text-gold" : "text-[#8A9BB5]"
+                      "w-full text-left px-5 py-4 text-xs font-bold uppercase tracking-widest transition-all duration-300 hover:bg-gold/10",
+                      sortBy === option ? "text-gold bg-gold/5" : "text-text-muted"
                     )}
                   >
                     {t(option === 'rating' ? 'highestRated' : option === 'reviews' ? 'mostReviewed' : 'az')}

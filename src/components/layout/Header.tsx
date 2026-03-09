@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { Search, Menu, X, Compass } from 'lucide-react';
 import { Language } from '../../types';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { cn } from '../../utils/cn';
 
 interface HeaderProps {
   language: Language;
@@ -41,54 +36,54 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-bg-deep/88 backdrop-blur-xl border-b border-border-custom/80">
-      <div className="max-w-7xl mx-auto h-16 px-4 flex items-center justify-between gap-4">
+    <header className="fixed top-0 left-0 right-0 z-50 cc-glass">
+      <div className="max-w-7xl mx-auto h-20 px-4 flex items-center justify-between gap-4">
         {/* Left: Logo */}
         <div 
-          className="flex items-center gap-2 cursor-pointer group"
+          className="flex items-center gap-3 cursor-pointer group"
           onClick={onLogoClick}
         >
-          <div className="w-8 h-8 rounded-lg bg-gold/10 flex items-center justify-center border border-gold/20 group-hover:border-gold/50 transition-all">
-            <Compass className="w-5 h-5 text-gold" />
+          <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center border border-gold/20 group-hover:border-gold/50 group-hover:bg-gold/20 transition-all duration-300">
+            <Compass className="w-6 h-6 text-gold" />
           </div>
-          <span className="text-lg font-bold bg-gradient-to-r from-gold to-gold-bright bg-clip-text text-transparent hidden sm:block">
+          <span className="text-xl font-bold text-gradient hidden sm:block tracking-tight">
             Iraq Compass
           </span>
         </div>
 
         {/* Center: Search (Desktop) */}
         <div className="hidden md:flex flex-1 max-w-md">
-          <form onSubmit={handleSearchSubmit} className="w-full relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-faint" />
+          <form onSubmit={handleSearchSubmit} className="w-full relative group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-faint group-focus-within:text-gold transition-colors" />
             <input
               type="text"
               value={localSearch}
               onChange={(e) => setLocalSearch(e.target.value)}
               placeholder={t('searchPlaceholder')}
-              className="cc-input w-full pl-10"
+              className="cc-input w-full pl-11"
             />
           </form>
         </div>
 
         {/* Right: Language & Mobile Search */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <button 
-            className="md:hidden p-2 text-text-muted hover:text-white"
+            className="md:hidden p-2.5 rounded-xl bg-bg-elevated/50 border border-border-custom text-text-muted hover:text-white hover:border-gold/30 transition-all"
             onClick={() => setIsSearchOpen(!isSearchOpen)}
           >
             {isSearchOpen ? <X className="w-5 h-5" /> : <Search className="w-5 h-5" />}
           </button>
 
-          <div className="flex bg-bg-elevated rounded-lg p-1 border border-border-custom">
+          <div className="flex bg-bg-elevated/50 rounded-xl p-1 border border-border-custom backdrop-blur-md">
             {(['en', 'ar', 'ku'] as Language[]).map((lang) => (
               <button
                 key={lang}
                 onClick={() => onLanguageChange(lang)}
                 className={cn(
-                  "px-3 py-1 rounded-md text-xs font-bold transition-all uppercase",
+                  "px-4 py-1.5 rounded-lg text-xs font-bold transition-all uppercase tracking-wider",
                   language === lang 
-                    ? "bg-gold text-bg-deep" 
-                    : "text-text-muted hover:text-white"
+                    ? "bg-gold text-bg-deep shadow-lg shadow-gold/20" 
+                    : "text-text-muted hover:text-white hover:bg-white/5"
                 )}
               >
                 {lang}
@@ -103,20 +98,20 @@ export const Header: React.FC<HeaderProps> = ({
         className="md:hidden"
         style={{
           overflow: 'hidden',
-          maxHeight: isSearchOpen ? '64px' : '0',
-          transition: 'max-height 0.2s ease',
-          borderBottom: isSearchOpen ? '1px solid #1E2D52' : 'none',
-          background: 'rgba(7, 9, 15, 0.95)'
+          maxHeight: isSearchOpen ? '80px' : '0',
+          transition: 'max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          borderBottom: isSearchOpen ? '1px solid rgba(30, 45, 82, 0.5)' : 'none',
+          background: 'rgba(7, 9, 15, 0.98)'
         }}
       >
-        <div className="relative px-4 py-3">
-          <Search className="absolute left-7 top-1/2 -translate-y-1/2 w-4 h-4 text-text-faint" />
+        <div className="relative px-4 py-4">
+          <Search className="absolute left-8 top-1/2 -translate-y-1/2 w-4 h-4 text-text-faint" />
           <input 
             type="text"
             value={localSearch}
             placeholder={t('searchPlaceholder')}
             onChange={handleInputChange}
-            className="w-full bg-transparent border-none focus:ring-0 text-[#F0EDE8] pl-10 pr-4 py-2 text-sm"
+            className="w-full bg-bg-card/50 border border-border-custom rounded-xl focus:ring-2 focus:ring-gold/30 focus:border-gold/50 text-[#F0EDE8] pl-12 pr-4 py-3 text-sm transition-all"
           />
         </div>
       </div>

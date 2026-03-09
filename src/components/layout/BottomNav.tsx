@@ -1,12 +1,8 @@
 import React from 'react';
 import { Home, Compass, Search, User } from 'lucide-react';
 import { View } from '../../types';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { cn } from '../../utils/cn';
+import { motion } from 'motion/react';
 
 interface BottomNavProps {
   currentView: View;
@@ -23,31 +19,30 @@ export const BottomNav: React.FC<BottomNavProps> = ({ currentView, onNavigate, t
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 h-16 bg-bg-deep/96 backdrop-blur-xl border-t border-border-custom z-50 md:hidden pb-safe">
-      <div className="flex h-full">
-        {tabs.map((tab) => {
-          const isActive = currentView === tab.id;
+    <nav className="md:hidden fixed bottom-6 left-6 right-6 z-50">
+      <div className="bg-bg-card/60 backdrop-blur-2xl border border-white/10 rounded-[24px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] px-4 py-3 flex items-center justify-around">
+        {tabs.map(tab => {
           const Icon = tab.icon;
-
+          const isActive = currentView === tab.id;
+          
           return (
             <button
               key={tab.id}
               onClick={() => onNavigate(tab.id)}
-              className="flex-1 flex flex-col items-center justify-center relative"
+              className={cn(
+                "flex flex-col items-center gap-1.5 transition-all duration-300 relative px-4 py-2 rounded-2xl",
+                isActive ? "text-gold" : "text-text-faint hover:text-text-muted"
+              )}
             >
               {isActive && (
-                <div className="absolute top-0 left-1/4 right-1/4 h-0.5 bg-gold rounded-full" />
+                <motion.div 
+                  layoutId="activeTab"
+                  className="absolute inset-0 bg-gold/10 rounded-2xl border border-gold/20"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
               )}
-              <Icon className={cn(
-                "w-5 h-5 transition-colors",
-                isActive ? "text-gold" : "text-text-faint"
-              )} />
-              <span className={cn(
-                "text-[10px] mt-1 font-medium transition-colors",
-                isActive ? "text-gold" : "text-text-faint"
-              )}>
-                {tab.label}
-              </span>
+              <Icon className={cn("w-5 h-5 relative z-10", isActive ? "stroke-[2.5px]" : "stroke-[2px]")} />
+              <span className="text-[10px] font-black uppercase tracking-widest relative z-10">{tab.label}</span>
             </button>
           );
         })}

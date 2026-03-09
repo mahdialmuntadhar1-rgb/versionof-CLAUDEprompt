@@ -41,6 +41,7 @@ export interface Business {
   tags: string[];
   lat?: number;
   lng?: number;
+  reviews?: Review[];
 }
 
 export interface Review {
