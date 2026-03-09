@@ -1,0 +1,82 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
+
+@theme {
+  --font-sans: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-arabic: "IBM Plex Sans Arabic", sans-serif;
+
+  --color-bg-deep: #07090F;
+  --color-bg-card: #0F1629;
+  --color-bg-elevated: #162040;
+  --color-border-custom: #1E2D52;
+  --color-gold: #D4A853;
+  --color-gold-bright: #F5C842;
+  --color-teal: #0EA5A0;
+  --color-green: #34D399;
+  --color-red: #EF4444;
+  --color-text-white: #F0EDE8;
+  --color-text-muted: #8A9BB5;
+  --color-text-faint: #4A5568;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-deep text-text-white font-sans antialiased;
+    background-image: 
+      radial-gradient(circle at 10% 10%, rgba(212, 168, 83, 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(14, 165, 160, 0.05) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+
+  [dir="rtl"] {
+    @apply font-arabic;
+  }
+}
+
+@layer components {
+  .cc-card {
+    @apply bg-bg-card border border-border-custom rounded-2xl transition-all duration-300 hover:border-gold/50 hover:shadow-[0_0_20px_rgba(212,168,83,0.1)];
+  }
+
+  .cc-input {
+    @apply bg-bg-card border border-border-custom rounded-xl px-4 py-2 text-text-white placeholder:text-text-faint focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all;
+  }
+
+  .btn-gold {
+    @apply bg-gradient-to-r from-gold to-gold-bright text-bg-deep font-bold px-6 py-3 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50;
+  }
+
+  .btn-ghost {
+    @apply border border-border-custom text-text-muted font-medium px-6 py-3 rounded-xl transition-all hover:bg-bg-elevated hover:text-text-white;
+  }
+
+  .badge-gold {
+    @apply bg-gold/10 text-gold text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md border border-gold/20;
+  }
+
+  .badge-teal {
+    @apply bg-teal/10 text-teal text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md border border-teal/20;
+  }
+
+  .badge-green {
+    @apply bg-green/10 text-green text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md border border-green/20;
+  }
+}
+
+/* Hide scrollbar but allow scrolling */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse-custom {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
