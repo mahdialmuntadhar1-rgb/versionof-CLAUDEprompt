@@ -1,7 +1,8 @@
 import React from 'react';
 import { MapPin, Star, Phone, Globe, Clock, ArrowLeft, ArrowRight, Share2, CheckCircle } from 'lucide-react';
 import { Business, Language } from '../../types';
-import { CATEGORIES } from '../../constants';
+import { CATEGORIES, MOCK_BUSINESSES } from '../../constants';
+import { BusinessCard } from '../ui/BusinessCard';
 import { cn } from '../../utils/cn';
 import { motion } from 'motion/react';
 
@@ -18,6 +19,7 @@ export const DetailView: React.FC<DetailViewProps> = ({
   language,
   t,
   onBack,
+  onSelectBusiness,
 }) => {
   const isRTL = language === 'ar' || language === 'ku';
   const category = CATEGORIES.find(c => c.id === business.category);
@@ -50,7 +52,7 @@ export const DetailView: React.FC<DetailViewProps> = ({
             >
               <button 
                 onClick={onBack}
-                className="mb-8 flex items-center gap-2 text-text-white/80 hover:text-gold transition-colors font-bold text-xs uppercase tracking-widest bg-white/5 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10"
+                className="mb-8 flex items-center gap-2 text-text-white/80 hover:text-gold transition-colors font-bold text-xs sm:text-sm uppercase tracking-widest bg-white/5 backdrop-blur-md px-4 py-2.5 rounded-lg border border-white/10 min-h-[44px] min-w-[44px]"
               >
                 {isRTL ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
                 {t('back')}
@@ -70,30 +72,30 @@ export const DetailView: React.FC<DetailViewProps> = ({
                       </div>
                     )}
                   </div>
-                  <h1 className="text-4xl md:text-6xl font-black text-text-white tracking-tighter mb-4">{actualName}</h1>
-                  <div className="flex flex-wrap items-center gap-6 text-text-white/80">
+                  <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-text-white tracking-tighter mb-4">{actualName}</h1>
+                  <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-text-white/80">
                     <div className="flex items-center gap-2">
                       <div className="flex items-center gap-0.5">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className={cn("w-4 h-4", i < Math.floor(business.rating) ? "text-gold fill-gold" : "text-white/20")} />
+                          <Star key={i} className={cn("w-3.5 h-3.5 sm:w-4 h-4", i < Math.floor(business.rating) ? "text-gold fill-gold" : "text-white/20")} />
                         ))}
                       </div>
-                      <span className="text-lg font-black text-gold">{business.rating.toFixed(1)}</span>
-                      <span className="text-sm font-bold">({business.reviewCount} {t('reviews')})</span>
+                      <span className="text-base sm:text-lg font-black text-gold">{business.rating.toFixed(1)}</span>
+                      <span className="text-xs sm:text-sm font-bold">({business.reviewCount} {t('reviews')})</span>
                     </div>
-                    <div className="flex items-center gap-2 font-bold text-sm">
-                      <MapPin className="w-4 h-4 text-gold" />
+                    <div className="flex items-center gap-2 font-bold text-xs sm:text-sm">
+                      <MapPin className="w-3.5 h-3.5 sm:w-4 h-4 text-gold" />
                       {business.city}, {business.governorate}
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3">
-                  <button className="btn-gold px-8 h-14 text-sm flex items-center gap-2 shadow-2xl shadow-gold/20">
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                  <button className="btn-gold flex-1 sm:flex-none px-8 h-14 text-sm flex items-center justify-center gap-2 shadow-2xl shadow-gold/20 min-h-[44px]">
                     <Phone className="w-4 h-4" />
                     {t('callNow')}
                   </button>
-                  <button className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-text-white hover:bg-gold hover:text-bg-deep hover:border-gold transition-all duration-300">
+                  <button className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-text-white hover:bg-gold hover:text-bg-deep hover:border-gold transition-all duration-300 min-h-[44px] min-w-[44px]">
                     <Share2 className="w-5 h-5" />
                   </button>
                 </div>
@@ -230,6 +232,26 @@ export const DetailView: React.FC<DetailViewProps> = ({
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* SIMILAR PLACES */}
+        <div className="mt-24">
+          <h2 className="text-2xl font-black text-text-white tracking-tight mb-8 flex items-center gap-3 px-4 sm:px-0">
+            <div className="w-1.5 h-8 bg-gold rounded-full" />
+            {t('similarPlaces')}
+          </h2>
+          <div className="flex gap-6 overflow-x-auto pb-8 no-scrollbar snap-x snap-mandatory px-4 sm:px-0">
+            {MOCK_BUSINESSES.filter(b => b.category === business.category && b.id !== business.id).slice(0, 4).map(similar => (
+              <div key={similar.id} className="snap-start">
+                <BusinessCard
+                  business={similar}
+                  onSelect={onSelectBusiness}
+                  language={language}
+                  compact
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>

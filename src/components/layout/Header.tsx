@@ -40,13 +40,13 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto h-20 px-4 flex items-center justify-between gap-4">
         {/* Left: Logo */}
         <div 
-          className="flex items-center gap-3 cursor-pointer group"
+          className="flex items-center gap-2 sm:gap-3 cursor-pointer group shrink-0"
           onClick={onLogoClick}
         >
-          <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center border border-gold/20 group-hover:border-gold/50 group-hover:bg-gold/20 transition-all duration-300">
-            <Compass className="w-6 h-6 text-gold" />
+          <div className="w-9 h-9 sm:w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center border border-gold/20 group-hover:border-gold/50 group-hover:bg-gold/20 transition-all duration-300">
+            <Compass className="w-5 h-5 sm:w-6 h-6 text-gold" />
           </div>
-          <span className="text-xl font-bold text-gradient hidden sm:block tracking-tight">
+          <span className="text-lg sm:text-xl font-bold text-gradient hidden xs:block tracking-tight truncate max-w-[120px] sm:max-w-none">
             Iraq Compass
           </span>
         </div>
@@ -60,27 +60,27 @@ export const Header: React.FC<HeaderProps> = ({
               value={localSearch}
               onChange={(e) => setLocalSearch(e.target.value)}
               placeholder={t('searchPlaceholder')}
-              className="cc-input w-full pl-11"
+              className="cc-input w-full pl-11 text-sm sm:text-base"
             />
           </form>
         </div>
 
         {/* Right: Language & Mobile Search */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <button 
-            className="md:hidden p-2.5 rounded-xl bg-bg-elevated/50 border border-border-custom text-text-muted hover:text-white hover:border-gold/30 transition-all"
+            className="md:hidden p-2 rounded-xl bg-bg-elevated/50 border border-border-custom text-text-muted hover:text-white hover:border-gold/30 transition-all min-w-[44px] min-h-[44px] flex items-center justify-center"
             onClick={() => setIsSearchOpen(!isSearchOpen)}
           >
             {isSearchOpen ? <X className="w-5 h-5" /> : <Search className="w-5 h-5" />}
           </button>
 
-          <div className="flex bg-bg-elevated/50 rounded-xl p-1 border border-border-custom backdrop-blur-md">
+          <div className="flex bg-bg-elevated/50 rounded-xl p-1 border border-border-custom backdrop-blur-md overflow-hidden">
             {(['en', 'ar', 'ku'] as Language[]).map((lang) => (
               <button
                 key={lang}
                 onClick={() => onLanguageChange(lang)}
                 className={cn(
-                  "px-4 py-1.5 rounded-lg text-xs font-bold transition-all uppercase tracking-wider",
+                  "px-2.5 sm:px-4 py-1.5 rounded-lg text-[10px] sm:text-xs font-bold transition-all uppercase tracking-wider min-w-[36px] sm:min-w-[44px]",
                   language === lang 
                     ? "bg-gold text-bg-deep shadow-lg shadow-gold/20" 
                     : "text-text-muted hover:text-white hover:bg-white/5"
