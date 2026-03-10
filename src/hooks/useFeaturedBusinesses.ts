@@ -1,22 +1,18 @@
 ﻿import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { Business } from '../types/database'
-export function useBusinesses(cityId?: string, categoryId?: string) {
+export function useFeaturedBusinesses() {
   const [data, setData] = useState<Business[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   useEffect(() => {
     async function fetch() {
-      setLoading(true)
-      let query = supabase.from('businesses').select('*')
-      if (cityId) query = query.eq('city_id', cityId)
-      if (categoryId) query = query.eq('category_id', categoryId)
-      const { data, error } = await query
+      const { data, error } = await supabase.from('businesses').select('*').eq('top_rated', true).limit(10)
       if (error) setError(error.message)
       else setData(data || [])
       setLoading(false)
     }
     fetch()
-  }, [cityId, categoryId])
+  }, [])
   return { data, loading, error }
 }

@@ -1,24 +1,13 @@
-{
-  "name": "Iraq Compass",
-  "short_name": "Iraq Compass",
-  "description": "Discover Businesses & Events in Iraq",
-  "start_url": "/",
+﻿{
+  "name": "Discover Iraq",
+  "short_name": "DiscoverIQ",
+  "description": "Find the best places in Iraq",
+  "theme_color": "#0A0A0F",
+  "background_color": "#0A0A0F",
   "display": "standalone",
-  "background_color": "#07090F",
-  "theme_color": "#D4A853",
-  "orientation": "portrait",
+  "start_url": "/",
   "icons": [
-    {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }
