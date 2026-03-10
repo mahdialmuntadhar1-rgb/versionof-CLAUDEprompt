@@ -6,13 +6,13 @@ export function useCities() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   useEffect(() => {
-    async function fetch() {
+    async function load() {
       const { data, error } = await supabase.from('cities').select('*')
       if (error) setError(error.message)
       else setData(data || [])
       setLoading(false)
     }
-    fetch()
+    load()
   }, [])
   return { data, loading, error }
 }

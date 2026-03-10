@@ -6,17 +6,17 @@ export function useBusinesses(cityId?: string, categoryId?: string) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   useEffect(() => {
-    async function fetch() {
+    async function load() {
       setLoading(true)
-      let query = supabase.from('businesses').select('*')
-      if (cityId) query = query.eq('city_id', cityId)
-      if (categoryId) query = query.eq('category_id', categoryId)
-      const { data, error } = await query
+      let q = supabase.from('businesses').select('*')
+      if (cityId) q = q.eq('city_id', cityId)
+      if (categoryId) q = q.eq('category_id', categoryId)
+      const { data, error } = await q
       if (error) setError(error.message)
       else setData(data || [])
       setLoading(false)
     }
-    fetch()
+    load()
   }, [cityId, categoryId])
   return { data, loading, error }
 }

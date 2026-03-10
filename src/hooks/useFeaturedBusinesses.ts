@@ -6,13 +6,15 @@ export function useFeaturedBusinesses() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   useEffect(() => {
-    async function fetch() {
-      const { data, error } = await supabase.from('businesses').select('*').eq('top_rated', true).limit(10)
+    async function load() {
+      const { data, error } = await supabase
+        .from('businesses').select('*')
+        .eq('top_rated', true).limit(10)
       if (error) setError(error.message)
       else setData(data || [])
       setLoading(false)
     }
-    fetch()
+    load()
   }, [])
   return { data, loading, error }
 }
