@@ -1,5 +1,7 @@
 {
-  "name": " mahdialmuntadhar1-rgb/versionof-CLAUDEprompt on main",
-  "description": "A production-ready business and event discovery directory for Iraq, featuring AI-curated events and multi-language support.",
-  "requestFramePermissions": []
+  "name": "Copy of Iraq CompassAMAZINGFINAL2",
+  "description": "A futuristic, AI-powered event and business discovery platform for Iraq, featuring a glassmorphic design and multilingual support.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
 }
