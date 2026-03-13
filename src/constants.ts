@@ -761,7 +761,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     statsRow: '500+ Businesses · 18 Governorates · 3 Languages',
     more: 'More',
     places: 'places',
-    businesses: 'businesses',
+    businesses: 'directory',
     tryArabicKurdish: 'Try searching for categories like "Restaurants" or cities like "Erbil". You can also search in Arabic or Kurdish.',
     phone: 'Phone',
     address: 'Address',

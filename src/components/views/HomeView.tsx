@@ -141,7 +141,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <div className="mt-16 sm:mt-24 flex flex-wrap items-center justify-center gap-4 sm:gap-12 text-text-faint text-[10px] sm:text-xs font-bold uppercase tracking-widest px-4">
           <div className="flex items-center gap-2 sm:gap-3">
             <span className="text-gold text-base sm:text-lg">500+</span>
-            <span>{t('businesses')}</span>
+            <span>{t('directory')}</span>
           </div>
           <div className="hidden sm:block w-1.5 h-1.5 rounded-full bg-border-custom" />
           <div className="flex items-center gap-2 sm:gap-3">
@@ -308,7 +308,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 </div>
                 <span className="text-base font-bold text-text-white group-hover:text-gold transition-colors duration-300">{gov}</span>
                 <span className="text-[10px] text-text-faint mt-2 font-black uppercase tracking-[0.2em]">
-                  {count} {t('businesses')}
+                  {count} {t('directory')}
                 </span>
               </div>
             );
